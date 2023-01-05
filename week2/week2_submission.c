@@ -15,8 +15,42 @@
 typedef enum month{ jan, feb, mar, apr, jun, jul, aug, sep, oct ,nov, dec} month;
 typedef struct date{ month m; int d;} date;
 
-date nextday(date d){
-    printf("some value %d", d.m);
+void add_one_day(date *date){
+    date -> d++; 
+}
+
+date nextday(date *date){
+
+    if(date.d < 28){
+        add_one_day(date); 
+    } else {
+        switch(date.m){
+            case jan: 
+                if(date.d = 31){
+                    date -> d=1;
+                    date -> m=feb;
+                } else {
+                   add_one_day(date);      
+                }
+            case feb:
+                 if(date.d = 28){
+                    date -> d=1;
+                    date -> m=mar;
+                } else {
+                   add_one_day(date);      
+                }   
+             case mar:
+                 if(date.d = 31){
+                    date -> d=1;
+                    date -> m=mar;
+                } else {
+                   add_one_day(date);      
+                }     
+
+        }
+    }
+    
+
     return d;
     }
 
