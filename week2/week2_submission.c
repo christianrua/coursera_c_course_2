@@ -11,16 +11,26 @@
 */
 
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef enum month{ jan, feb, mar, apr, may, jun, jul, aug, sep, oct ,nov, dec} month;
 typedef struct date{ month m; int d;} date;
 
-void add_one_day(date* date){
-    date -> d++; 
+void add_one_day(date* date, bool reset_days){
+    if(reset_days){
+       date -> d = 1; 
+    } else {
+        date -> d++; 
+    }
+    
 }
 
-void add_one_month(date* date){
-    date -> m++;
+void add_one_month(date* date, bool reset_month){
+    if(reset_month) {
+         date -> m = jan;
+    } else {
+        date -> m++;
+    }
 }
 
 void nextday(date* date){
@@ -28,46 +38,53 @@ void nextday(date* date){
     switch(date -> d){
         case 28: 
             if(date -> m == 1){
-                add_one_day(date);
-                add_one_month(date);
+                add_one_day(date, true);
+                add_one_month(date, false);
             } else {
-                add_one_day(date);
+                add_one_day(date, false);
             }
             break;
         case 30: 
             if(date -> m == 3 || date -> m == 5 || date -> m == 10 ){
-                    add_one_day(date);
-                    add_one_month(date);
+                    add_one_day(date, true);
+                    add_one_month(date, false);
                 } else {
-                    add_one_day(date);
+                    add_one_day(date, false);
             }
             break;
         case 31: 
-            if(date -> m == 0 || date -> m == 2 || date -> m == 4 || date -> m == 6 || date -> m == 7 || date -> m == 9 || date -> m == 11  ){
-                    add_one_day(date);
-                    add_one_month(date);
-                } else {
-                    add_one_day(date);
+            if(date -> m == 11){
+                    add_one_day(date, true);
+                    add_one_month(date, true);
             }
-            break;        
+            else if(date -> m == 0 || date -> m == 2 || date -> m == 4 || date -> m == 6 || date -> m == 7 || date -> m == 9 ){
+                    add_one_day(date, true);
+                    add_one_month(date, false);
+                } else {
+                    add_one_day(date, false);
+            }
+            break;  
+        default:
+            add_one_day(date, false);
+
         }
     }
 
 void printdate(date d){
     switch(d.m){
-        case jan: printf(" January %d", d.d); break;
-        case feb: printf(" February %d", d.d); break;
-        case mar: printf(" March %d", d.d); break;
-        case apr: printf(" April %d", d.d); break;
-        case may: printf(" May %d", d.d); break;
-        case jun: printf(" June %d", d.d); break;
-        case jul: printf(" July %d", d.d); break;
-        case aug: printf(" August %d", d.d); break;
-        case sep: printf(" September %d", d.d); break;
-        case oct: printf(" October %d", d.d); break;
-        case nov: printf(" November %d", d.d); break;
-        case dec: printf(" December %d", d.d); break;
-        default: printf("%d is an error", d);
+        case jan: printf(" January %d \n", d.d); break;
+        case feb: printf(" February %d \n", d.d); break;
+        case mar: printf(" March %d \n", d.d); break;
+        case apr: printf(" April %d \n", d.d); break;
+        case may: printf(" May %d \n", d.d); break;
+        case jun: printf(" June %d \n", d.d); break;
+        case jul: printf(" July %d \n", d.d); break;
+        case aug: printf(" August %d \n", d.d); break;
+        case sep: printf(" September %d \n", d.d); break;
+        case oct: printf(" October %d \n", d.d); break;
+        case nov: printf(" November %d \n", d.d); break;
+        case dec: printf(" December %d \n", d.d); break;
+        default: printf("%d is an error \n", d);
     }
 }    
 
@@ -82,11 +99,12 @@ int main(){
                             {oct,31},
                             {dec,31}
                         };
-
-    for(int i=0; i < 5; i++){
+    printf("\n");
+    for(int i=0; i < 4; i++){
         printdate(arr_date[i]);
         nextday(&arr_date[i]);
         printdate(arr_date[i]);
+        printf("-------\n");
     };
     return 0;
 }
