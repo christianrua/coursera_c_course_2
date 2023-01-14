@@ -15,74 +15,42 @@
 typedef enum month{ jan, feb, mar, apr, may, jun, jul, aug, sep, oct ,nov, dec} month;
 typedef struct date{ month m; int d;} date;
 
-void add_one_day(struct date *date){
+void add_one_day(date* date){
     date -> d++; 
 }
 
-void add_one_month(struct date *date){
+void add_one_month(date* date){
     date -> m++;
 }
 
-void nextday(struct date *date){
+void nextday(date* date){
 
     switch(date -> d){
         case 28: 
             if(date -> m == 1){
-                add_one_day(&date);
-                add_one_month(&date);
+                add_one_day(date);
+                add_one_month(date);
             } else {
-                add_one_day(&date);
+                add_one_day(date);
             }
             break;
         case 30: 
             if(date -> m == 3 || date -> m == 5 || date -> m == 10 ){
-                    add_one_day(&date);
-                    add_one_month(&date);
+                    add_one_day(date);
+                    add_one_month(date);
                 } else {
-                    add_one_day(&date);
+                    add_one_day(date);
             }
             break;
         case 31: 
             if(date -> m == 0 || date -> m == 2 || date -> m == 4 || date -> m == 6 || date -> m == 7 || date -> m == 9 || date -> m == 11  ){
-                    add_one_day(&date);
-                    add_one_month(&date);
+                    add_one_day(date);
+                    add_one_month(date);
                 } else {
-                    add_one_day(&date);
+                    add_one_day(date);
             }
             break;        
-    }
-
-    // if(&date.d < 28){
-    //     add_one_day(date); 
-    // } else {
-    //     switch(date.m){
-    //         case jan: 
-    //             if(date.d = 31){
-    //                 date -> d=1;
-    //                 date -> m=feb;
-    //             } else {
-    //                add_one_day(date);      
-    //             }
-    //         case feb:
-    //              if(date.d = 28){
-    //                 date -> d=1;
-    //                 date -> m=mar;
-    //             } else {
-    //                add_one_day(date);      
-    //             }   
-    //          case mar:
-    //              if(date.d = 31){
-    //                 date -> d=1;
-    //                 date -> m=mar;
-    //             } else {
-    //                add_one_day(date);      
-    //             }     
-
-    //     }
-    // }
-    
-
-    // return d;
+        }
     }
 
 void printdate(date d){
@@ -103,10 +71,22 @@ void printdate(date d){
     }
 }    
 
+
+
 int main(){
-    date some_date = {jan,2};
-    printdate(some_date);
-    nextday(&some_date);
-    printdate(some_date);
+    // Do this for the following dates:  February 28, March 14, October 31, and  December 31
+   
+    struct date arr_date[4] = {
+                            {feb,28},
+                            {mar,14},
+                            {oct,31},
+                            {dec,31}
+                        };
+
+    for(int i=0; i < 5; i++){
+        printdate(arr_date[i]);
+        nextday(&arr_date[i]);
+        printdate(arr_date[i]);
+    };
     return 0;
 }
