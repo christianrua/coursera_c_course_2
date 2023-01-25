@@ -10,6 +10,7 @@
 typedef struct list{ int data; struct list *next;} list;
 
 int is_empty(const list *l){ return (l == NULL);}
+
 list* create_list(int d){
     list* head = malloc(sizeof(list));
     head -> data = d;
